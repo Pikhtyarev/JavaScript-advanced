@@ -1,14 +1,7 @@
 "use strict";
 
-let weatherMap = new Map([
-  ["London", 10],
-  ["Moscow", 15],
-]);
+function randomFrom1to20(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
-// for (const [key, value] of weatherMap) {
-//   let weatherMapNew = new Map([[value, key]]);
-//   console.log(weatherMapNew);
-// }
-
-weatherMap = new Map([...weatherMap].map((el) => el.reverse()));
-console.log(weatherMap);
+console.log(randomFrom1to20(1, 20));
