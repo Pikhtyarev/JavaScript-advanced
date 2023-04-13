@@ -1,35 +1,19 @@
 "use strict";
 
-const user = {
-  name: "Vasya",
-  birthday: "4/13/2023",
-};
-
-// МОЕ РЕШЕНИЕ
-let userBirthday = `${new Date(user.birthday).getFullYear()} ${new Date(
-  user.birthday
-).getMonth()} ${new Date(user.birthday).getDate()}`;
-console.log(userBirthday);
-const today = `${new Date().getFullYear()} ${new Date().getMonth()} ${new Date().getDate()}`;
-console.log(today);
-
-function isBirhday() {
-  if (userBirthday == today) return true;
-  else return false;
+function pizzaTimer(ms) {
+  const deadLine = new Date().getTime() + ms;
+  const interval = setInterval(() => {
+    console.log(
+      new Intl.DateTimeFormat("ru-RU", {
+        minute: "numeric",
+        second: "numeric",
+      }).format(deadLine + 150 - new Date())
+    );
+  }, 1000);
+  setTimeout(() => {
+    clearInterval(interval);
+    console.log("PIZZA Done");
+  }, ms);
 }
 
-console.log(isBirhday());
-
-// РЕШЕНИЕ ПРЕПОДАВАТЕЛЯ
-// function isBirhday(user) {
-//   const birthdayDate = new Date(user.birthday);
-//   const now = new Date();
-//   if (birthdayDate.getMonth() !== now.getMonth()) {
-//     return false;
-//   }
-//   if (birthdayDate.getDate() !== now.getDate()) {
-//     return false;
-//   }
-//   return true;
-// }
-// console.log(isBirhday(user));
+pizzaTimer(5000);
