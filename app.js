@@ -1,69 +1,43 @@
 "use strict";
 
-const product = { id: 1, name: "Bread", count: 1 };
+class User {
+  #login;
+  #_password;
 
-// МОЕ РЕШЕНИЕ
+  constructor(login, password) {
+    this.#login = login;
+    this.#password = password;
+  };
 
-// const Cart = function (id, name, count) {
-//   this.id = id;
-//   this.name = name;
-//   this.count = count;
-// };
-
-// Cart.prototype.addCountProduct = function (count) {
-//   this.count += count;
-// };
-
-// Cart.prototype.removeCountProduct = function (count) {
-//   this.count -= count;
-//   if (this.count == 0 || this.count < 0) {
-//     this.count = "Товаров нет";
-//   }
-// };
-
-// const product2 = new Cart(2, "Nosok", 2);
-// product2.removeCountProduct(1);
-// product2.addCountProduct(10);
-
-// console.log(product2);
-
-//РЕШЕНИЕ ПРЕПОДАВАТЕЛЯ
-
-const Cart = function () {
-  this.products = [];
-};
-
-Cart.prototype.addProduct = function (product) {
-  if (this.products.find((product) => product.id === product.id)) {
-    return;
+  set #password(pass) {
+    this.#_password = pass.split("").reverse().join("");
   }
-  this.products.push(product);
-};
 
-Cart.prototype.increaseAmount = function (id) {
-  this.products = this.products.map((product) => {
-    if (product.id == id) {
-      product.count++;
-      return product;
-    }
-    return product;
-  });
-};
+  get #password () {
+    return this.#_password.split("").reverse().join("");
+  }
+  
+  get getLogin () {
+    return this.#login;
+  }
 
-Cart.prototype.decreaseAmount = function (id) {
-  this.products = this.products
-    .map((product) => {
-      if (product.id == id) {
-        product.count--;
-        return product;
-      }
-      return product;
-    })
-    .filter((product) => product.count > 0);
-};
+  set checkPassword (isTruePassword) {
+    if (isTruePassword == this.#password.split("").reverse().join("")) {
+      console.log(true);
+    } else console.log(false);
+  }
 
-const cart = new Cart();
-cart.addProduct(product);
-cart.increaseAmount(1);
-cart.decreaseAmount(1);
-console.log(cart);
+  changePassword (previousPassword, newPassword) {
+    if (this.#password == previousPassword) {
+      console.log("Пароль изменен");
+      this.#password = newPassword.split("").reverse().join("");
+    } else console.log("Пароль введен неверно");
+  }
+}
+
+const user1 = new User("ekseip", "123456");
+
+console.log(user1);
+console.log(user1.getLogin);
+user1.changePassword("123456", "123");
+user1.checkPassword = 123;
