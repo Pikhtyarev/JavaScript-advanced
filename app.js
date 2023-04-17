@@ -1,43 +1,42 @@
 "use strict";
 
-class User {
-  #login;
-  #_password;
-
-  constructor(login, password) {
-    this.#login = login;
-    this.#password = password;
-  };
-
-  set #password(pass) {
-    this.#_password = pass.split("").reverse().join("");
+class Enemy {
+  health;
+  constructor(health) {
+    this.health = health;
   }
 
-  get #password () {
-    return this.#_password.split("").reverse().join("");
-  }
-  
-  get getLogin () {
-    return this.#login;
-  }
-
-  set checkPassword (isTruePassword) {
-    if (isTruePassword == this.#password.split("").reverse().join("")) {
-      console.log(true);
-    } else console.log(false);
-  }
-
-  changePassword (previousPassword, newPassword) {
-    if (this.#password == previousPassword) {
-      console.log("Пароль изменен");
-      this.#password = newPassword.split("").reverse().join("");
-    } else console.log("Пароль введен неверно");
+  getDamage(damage) {
+    this.health -= damage;
   }
 }
 
-const user1 = new User("ekseip", "123456");
+class Orc extends Enemy {
+  constructor(health) {
+    super(health);
+  }
 
-console.log(user1);
-console.log(user1.getLogin);
-user1.changePassword("123456", "123");
-user1.checkPassword = 123;
+  getDamage(damage) {
+    if (Math.random() > 0.5) {
+      return this.health -= damage;
+    } else return this.health;
+  }
+}
+
+class Sword {
+  #power;
+  constructor(power) {
+    this.#power = power;
+  }
+
+  giveDamage(enemy) {
+    enemy.getDamage(this.#power);
+  }
+}
+
+const orc = new Orc(100);
+
+const mech = new Sword(50);
+mech.giveDamage(orc);
+
+console.log(orc);
