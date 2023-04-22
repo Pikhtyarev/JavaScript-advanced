@@ -1,17 +1,23 @@
 "use strict";
 
-function createSelect(array) {
-  const el = document.getElementById("block");
-  el.innerHTML = `<select>
-    ${array.map(arrEl => `<option value=${arrEl}>${arrEl}</option>`)}
-  </select>`
+function getData(url, errorMessage) {
+  return fetch(url)
+    .then(response => {
+        if (!response.ok) {
+          throw new Error(`${errorMessage}: ${response.status}`)
+        }
+        return response.json()
+    })
 }
 
-function getCategories() {
-  fetch("https://dummyjson.com/products/categories")
-  .then(response => response.json())
-  .then(data => createSelect(data))
-  .catch(error => console.error(`Ошибка: ${error}`))
-}
-
-getCategories();
+getData("https://dummyjson.com/products", "OSHIBKA")
+  .then(({ products }) => {
+    return getData("https://dummyjson.com/products/" + products[0].id, "OSHIBKA 2")
+  })
+  .then(data => {
+    console.log(data);
+  })
+  .catch(error => {
+    const el = document.getElementById("block");
+    el.innerHTML = error.message;
+  });
