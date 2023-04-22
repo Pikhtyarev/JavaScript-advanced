@@ -11,7 +11,7 @@ function getCategories() {
   fetch("https://dummyjson.com/products/categories")
   .then(response => response.json())
   .then(data => createSelect(data))
-  .catch(console.error(`Ошибка: ${error}`))
+  .catch(error => console.error(`Ошибка: ${error}`))
 }
 
 getCategories();
