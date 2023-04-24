@@ -2,57 +2,59 @@
 
 // МОЕ РЕШЕНИЕ
 
-// function success(pos) {
-//   let crd = pos.coords;
-//   const latitude = crd.latitude;
-//   const longitude = crd.longitude;
+// async function generator () {
+//   const response = await fetch("https://www.boredapi.com/api/activity");
+//   return response.json();
 // }
 
-// function error(err) {
-//   console.error(err);
+// async function getThreeIdea () {
+//   const result = await Promise.all([
+//     generator(),
+//     generator(),
+//     generator(),
+//   ]);
+
+//   const ideas = [];
+//   for (let i = 0; i < 3; i++) {
+//     let idea = result[i].activity;
+//     ideas.push(idea);
+//   }
+  
+//   document.getElementById("block").innerHTML = ideas;
+
+//   console.log(result);
 // }
 
-// navigator.geolocation.getCurrentPosition(success, error);
-
-
-// async function getLocation() {
-//   const resolve = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${success.latitude}&longitude=${success.longitude}`);
-//   const result = await resolve.json();
-
-//   console.log(result.city);
-// }
-
-// getLocation();
+// getThreeIdea();
 
 
 
+// РЕШЕНИЕ ПРЕПОДАВАТЕЛЯ
 
-// РЕШЕНИЕ ПРЕПОДАваТЕЛЯ
+const wrapper = document.querySelector(".wrapper");
 
-function getMyCoordinats() {
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        resolve({ latitude: coords.latitude, longitude: coords.longitude, })
-      }, (err) => {
-        reject(err);
-      }
-    );
-  })
+async function getActivity() {
+  const res = await fetch("https://www.boredapi.com/api/activity");
+  return res.json();
 }
 
-async function getMyCity() {
+async function generate() {
   try {
-    const { latitude, longitude } = await getMyCoordinats();
-    const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`);
-    if (!response.ok) {
-      throw new Error(response.status);
+    wrapper.innerHTML = "";
+    const data = await Promise.all([
+      getActivity(),
+      getActivity(),
+      getActivity(),
+    ]);
+    console.log(data);
+
+    for (const el of data) {
+      const element = document.createElement("div");
+      element.innerHTML = `${el.activity}`;
+      wrapper.appendChild(element);
     }
-    const data = await response.json();
-    console.log(data.city);
-  } catch(e) {
+
+  } catch (e) {
     console.error(e);
   }
 }
-
-getMyCity();
