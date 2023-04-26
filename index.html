@@ -9,11 +9,19 @@
     </head>
 
     <body style="background-color: darkslategrey; text-align: center;">
+
         <img src="/logo.png" alt="logo">
-        <div style="display: flex; justify-content: center;" class="wrapper"></div>
-        <div>
-            <button style="font-size: 30px;" class="button" onclick="generate()">GENERATE</button>
+
+        <br>
+        <br>
+
+        <div style="font-size: 36px; display: flex; justify-content: center;">
+            <input type="text" style="font-size: 30px; display: flex;" class="input" onchange="search(event)"></input>
         </div>
-        <div style="color: white; font-size: 36px;"  id="block"></div>
+
+        <br>
+
+        <div style="color: white; font-size: 36px; display: flex; justify-content: center; flex-direction: column;"  class="block"></div>
+
     </body>
 </html>

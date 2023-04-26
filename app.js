@@ -1,60 +1,22 @@
 "use strict";
 
-// МОЕ РЕШЕНИЕ
+const block = document.querySelector(".block");
 
-// async function generator () {
-//   const response = await fetch("https://www.boredapi.com/api/activity");
-//   return response.json();
-// }
-
-// async function getThreeIdea () {
-//   const result = await Promise.all([
-//     generator(),
-//     generator(),
-//     generator(),
-//   ]);
-
-//   const ideas = [];
-//   for (let i = 0; i < 3; i++) {
-//     let idea = result[i].activity;
-//     ideas.push(idea);
-//   }
-  
-//   document.getElementById("block").innerHTML = ideas;
-
-//   console.log(result);
-// }
-
-// getThreeIdea();
-
-
-
-// РЕШЕНИЕ ПРЕПОДАВАТЕЛЯ
-
-const wrapper = document.querySelector(".wrapper");
-
-async function getActivity() {
-  const res = await fetch("https://www.boredapi.com/api/activity");
-  return res.json();
+for (let i = 0; i < 20; i++) {
+  const element = document.createElement("div");
+  element.innerHTML = i;
+  element.setAttribute("el-id", i);
+  block.append(element);
 }
 
-async function generate() {
-  try {
-    wrapper.innerHTML = "";
-    const data = await Promise.all([
-      getActivity(),
-      getActivity(),
-      getActivity(),
-    ]);
-    console.log(data);
+function search(event) {
+  const inputValue = event.target.value;
 
-    for (const el of data) {
-      const element = document.createElement("div");
-      element.innerHTML = `${el.activity}`;
-      wrapper.appendChild(element);
+  for (const el of [...block.children]) {
+    if (el.innerHTML.includes(inputValue)) {
+      el.setAttribute("style", "background-color: blue");
+      continue;
     }
-
-  } catch (e) {
-    console.error(e);
+    el.removeAttribute("style", "background-color: blue");
   }
 }
